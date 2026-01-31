@@ -1,67 +1,66 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
+import time
 
-# 1. 頁面設定與深邃背景
-st.set_page_config(page_title="ZPIM 2026 戰略導航", layout="wide")
+# --- 1. 旗艦設定 ---
+st.set_page_config(page_title="ZPIM 2026 旗艦導航儀", layout="wide")
 
-# 2. 真鑰匙門禁
+# --- 2. 戰略授權庫 (分級計次熔斷) ---
+# 避開 4，1-x 系列限 3 次，a-x 系列限 5 次
+if "auth_db" not in st.session_state:
+    st.session_state["auth_db"] = {
+        "1-1": 3, "1-2": 3, "1-3": 3, "1-5": 3, "1-6": 3,
+        "a-1": 5, "a-2": 5, "a-3": 5, "a-5": 5, "a-6": 5
+    }
+
+# --- 3. 門禁入口 ---
 if "authenticated" not in st.session_state:
     st.session_state["authenticated"] = False
 
 if not st.session_state["authenticated"]:
-    st.title("🛡️ ZPIM 2026 旗艦實相已鎖定")
-    pwd = st.text_input("輸入戰略密碼", type="password")
-    if pwd == "zpim2026master":
-        st.session_state["authenticated"] = True
-        st.rerun()
-    else:
-        st.stop()
+    st.markdown("### 🛡️ ZPIM 2026 戰略授權節點")
+    pwd = st.text_input("輸入授權代碼", type="password")
+    if st.button("🚀 驗證身份"):
+        if pwd.isdigit() and int(pwd) >= 999: # 首席無限版
+            st.session_state["authenticated"] = True
+            st.session_state["level"] = "MASTER"
+            st.rerun()
+        elif pwd in st.session_state["auth_db"]: # 客用計次版
+            if st.session_state["auth_db"][pwd] > 0:
+                st.session_state["auth_db"][pwd] -= 1
+                st.session_state["authenticated"] = True
+                st.session_state["level"] = "GUEST"
+                st.session_state["remains"] = st.session_state["auth_db"][pwd]
+                st.rerun()
+            else:
+                st.error("🚫 授權已枯竭")
+        else:
+            st.error("❌ 無效代碼")
+    st.stop()
 
-# --- 進入授權區域 ---
-
-# 3. 浮水印與證書標誌 (CSS)
-st.markdown("""
-    <style>
-    .watermark {
-        position: fixed; bottom: 10px; right: 10px; opacity: 0.1;
-        font-size: 50px; color: white; transform: rotate(-30deg);
-    }
-    .certificate {
-        border: 2px solid #D4AF37; padding: 20px; border-radius: 10px;
-        background-color: rgba(212, 175, 55, 0.05);
-    }
-    </style>
-    <div class="watermark">ZPIM 2026 AUTHORIZED</div>
-    """, unsafe_allow_html=True)
-
-# 4. 主標題
+# --- 4. 核心系統 (100張素材邏輯) ---
 st.title("🚀 ZPIM 2026 旗艦戰略導航儀")
-st.markdown('<div class="certificate"><b>📜 2026 戰略授權證書：</b> 此實相已由首席顧問正式核准並啟動</div>', unsafe_allow_html=True)
+st.sidebar.markdown(f"**授權：** {st.session_state.get('level')}")
+if st.session_state.get("level") == "GUEST":
+    st.sidebar.warning(f"⏳ 剩餘次數：{st.session_state.get('remains')}")
 
-# 5. 側邊欄控制（拉桿百分比）
-st.sidebar.header("📊 戰略維度調整")
-val1 = st.sidebar.slider("核心實力 (Core Power) %", 0, 100, 88)
-val2 = st.sidebar.slider("市場擴張 (Market Expansion) %", 0, 100, 75)
-val3 = st.sidebar.slider("戰略佈局 (Strategic Layout) %", 0, 100, 92)
-val4 = st.sidebar.slider("實相顯化 (Reality Manifestation) %", 0, 100, 80)
+# 4Q 拉桿調整
+q1 = st.sidebar.slider("Q1 實體 %", 0, 100, 100)
+q2 = st.sidebar.slider("Q2 邏輯 %", 0, 100, 100)
+q3 = st.sidebar.slider("Q3 財務 %", 0, 100, 100)
+q4 = st.sidebar.slider("Q4 營運 %", 0, 100, 100)
 
-# 6. 四個紅色柱子數據
-data = pd.DataFrame({
-    '指標名稱': ['核心實力', '市場擴張', '戰略佈局', '實相顯化'],
-    '百分比': [val1, val2, val3, val4]
-})
-
-# 顯示圖表
-st.subheader("🔷 2026 戰略實相矩陣 (動態監測)")
-st.bar_chart(data.set_index('指標名稱'), color="#FF0000") # 指定紅色柱子
-
-# 7. 說明區域
-col1, col2 = st.columns(2)
-with col1:
-    st.info(f"🚩 目前核心總量：{(val1+val2+val3+val4)/4}%")
-with col2:
-    st.success("✅ 系統已處於私人最高防禦模式")
-
-st.markdown("---")
-st.write("✨ *星空背景已注入，數據即時校準中...*")
+if st.sidebar.button("🚀 啟動完整診斷"):
+    # 紅色柱圖顯化
+    data = pd.DataFrame({'維度':['Q1','Q2','Q3','Q4'], '值':[q1,q2,q3,q4]})
+    st.bar_chart(data.set_index('維度'), color="#FF0000")
+    
+    # 浮水印證書
+    st.markdown(f"""
+    <div style="border: 2px solid #D4AF37; padding: 20px; position: relative;">
+        <div style="position: absolute; opacity: 0.1; transform: rotate(-30deg); font-size: 50px;">CONFIDENTIAL</div>
+        <h2 style="text-align: center;">📜 ZPIM 2026 戰略診斷書</h2>
+        <p>總評級：S 級</p>
+        <p style="text-align: right;">首席顧問 鑑定核可</p>
+    </div>
+    """, unsafe_allow_html=True)
