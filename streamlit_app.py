@@ -98,13 +98,13 @@ if st.sidebar.button("🚀 啟動 101 戰略診斷"):
     with col1:
         st.markdown(f"""
         <div class="id-card">
-            <h3 style="color:white !important;">📊 四維度深度診斷報告</h3>
+            <h3 style="color: white !important; font-weight: bold; text-shadow: 2px 2px 4px #000000;">📊 四維度深度診斷報告</h3>
             <p>✅ Q1 實體：{q1}% - 核心資產已定格</p>
             <p>✅ Q2 邏輯：{q2}% - 指引路徑極致</p>
             <p>✅ Q3 財務：{q3}% - 點數核銷正常</p>
             <p>✅ Q4 營運：{q4}% - 電路通訊優良</p>
             <hr style="border: 0.5px solid #00FFCC;">
-            <p style="color:white !important;">🎯 改善對策：101888 燈塔戰略就位。</p>
+            <p style="color: white !important; font-weight: bold; text-shadow: 2px 2px 4px #000000;">🎯 改善對策：101888 燈塔戰略就位。</p>
         </div>
         """, unsafe_allow_html=True)
 
