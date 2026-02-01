@@ -2,131 +2,80 @@ import streamlit as st
 import pandas as pd
 import time
 
-# --- 1. 旗艦設定與 CSS 視覺注入 (發光電路板、發光星空、發光浮水印) ---
-st.set_page_config(page_title="ZPIM 2026 旗艦導航儀", layout="wide")
-
+# --- 1. 頂級視覺 CSS (星際噴發與發光浮水印) ---
+st.set_page_config(page_title="ZPIM 2026 巔峰導航儀", layout="wide")
 st.markdown("""
     <style>
-    /* 全局背景：發光電路板風格 */
     .stApp {
-        background-color: #000c14; /* 深藍黑色底 */
-        background-image: radial-gradient(circle at 2px 2px, #00ffcc 1px, transparent 0); /* 發光點 */
-        background-size: 40px 40px; /* 點陣密度 */
-        animation: glow_bg 10s infinite alternate; /* 背景發光動畫 */
+        background-color: #000c14;
+        background-image: radial-gradient(circle at 2px 2px, #00ffcc 1px, transparent 0),
+                          linear-gradient(45deg, rgba(0, 20, 40, 0.5) 0%, rgba(0, 5, 10, 0.9) 100%);
+        background-size: 50px 50px, cover;
+        animation: star_glow 12s infinite alternate;
     }
-    @keyframes glow_bg {
-        from { box-shadow: inset 0 0 50px rgba(0, 255, 204, 0.2); }
-        to { box-shadow: inset 0 0 80px rgba(0, 255, 204, 0.6); }
-    }
-
-    /* 確保所有文字在深色背景下可見 */
-    h1, h2, h3, h4, h5, h6, p, .stMarkdown, .stLabel, .streamlit-expanderHeader {
-        color: #E0FFFF !important; /* 淺青色發光文字 */
-    }
-    
-    /* 左側邊欄背景 */
-    .st-emotion-cache-vk3377 { /* Sidebar的CSS class會隨版本變動，這是一個常見的 */
-        background-color: rgba(0, 15, 30, 0.8) !important; /* 半透明深藍 */
-    }
-
-    /* 門禁與證書的區塊樣式 */
+    @keyframes star_glow { from { opacity: 0.8; } to { opacity: 1; } }
     .main-box {
-        border: 2px solid #00ffcc; /* 發光邊框 */
-        padding: 25px;
-        border-radius: 10px;
-        background-color: rgba(0, 20, 20, 0.9); /* 更深背景 */
-        box-shadow: 0 0 20px #00ffcc; /* 發光效果 */
-        animation: pulse_box 3s infinite alternate; /* 區塊脈動動畫 */
+        border: 2px solid #00ffcc; padding: 25px; border-radius: 12px;
+        background: rgba(0, 15, 25, 0.85); box-shadow: 0 0 25px rgba(0, 255, 204, 0.4);
     }
-    @keyframes pulse_box {
-        from { box-shadow: 0 0 10px #00ffcc; }
-        to { box-shadow: 0 0 30px #00ffcc; }
-    }
-
-    /* 證書浮水印：發光效果 */
-    .certificate-watermark {
-        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
-        opacity: 0.15; /* 更明顯一些 */
-        font-size: 60px;
-        color: #00ffcc; /* 發光顏色 */
-        text-shadow: 0 0 15px #00ffcc; /* 文字發光 */
-        z-index: 1000;
-        pointer-events: none;
-        white-space: nowrap;
+    .watermark {
+        position: fixed; top: 40%; left: 50%; transform: translate(-50%, -50%) rotate(-25deg);
+        color: #00ffcc; opacity: 0.08; font-size: 85px; pointer-events: none; z-index: 999;
     }
     </style>
+    <div class="watermark">ZPIM 2026 EXCLUSIVE</div>
     """, unsafe_allow_html=True)
 
-# --- 2. 戰略授權庫 (避 4 計次熔斷) ---
+# --- 2. 門禁授權庫 (計次熔斷) ---
 if "auth_db" not in st.session_state:
-    st.session_state["auth_db"] = {
-        "1-1": 3, "1-2": 3, "1-3": 3, "1-5": 3, "1-6": 3,
-        "a-1": 5, "a-2": 5, "a-3": 5, "a-5": 5, "a-6": 5
-    }
+    st.session_state["auth_db"] = {"1-1":3, "1-2":3, "1-3":3, "1-5":3, "a-1":5, "a-2":5, "a-3":5}
 
-# --- 3. 電路板門禁介面 (Gateway) ---
-if "authenticated" not in st.session_state:
-    st.session_state["authenticated"] = False
+if "auth" not in st.session_state: st.session_state["auth"] = False
 
-if not st.session_state["authenticated"]:
+# --- 3. 門禁介面 (電路板風格) ---
+if not st.session_state["auth"]:
     st.markdown('<div class="main-box">', unsafe_allow_html=True)
-    st.title("🔒 ZPIM 2026 系統鎖定")
-    st.write("Access Restricted: Authorized Personnel Only (ZPIM Secure Node)")
+    st.title("🛡️ ZPIM 2026 戰略授權節點")
     pwd = st.text_input("輸入授權代碼", type="password")
     if st.button("🚀 啟動驗證"):
-        if pwd.isdigit() and int(pwd) >= 999: # 首席無限版
-            st.session_state["authenticated"] = True
-            st.session_state["level"] = "MASTER"
-            st.rerun()
-        elif pwd in st.session_state["auth_db"]: # 客用計次版
-            if st.session_state["auth_db"][pwd] > 0:
-                st.session_state["auth_db"][pwd] -= 1
-                st.session_state["authenticated"] = True
-                st.session_state["level"] = "GUEST"
-                st.session_state["remains"] = st.session_state["auth_db"][pwd]
-                st.rerun()
-            else:
-                st.error("🚫 授權已枯竭")
-        else:
-            st.error("❌ 無效代碼")
-    st.markdown('</div>', unsafe_allow_html=True)
-    st.stop()
+        if pwd.isdigit() and int(pwd) >= 999:
+            st.session_state["auth"] = True; st.session_state["lvl"] = "MASTER"; st.rerun()
+        elif pwd in st.session_state["auth_db"] and st.session_state["auth_db"][pwd] > 0:
+            st.session_state["auth_db"][pwd] -= 1
+            st.session_state["auth"] = True; st.session_state["lvl"] = "GUEST"; st.rerun()
+        else: st.error("🚫 授權無效或已過期")
+    st.markdown('</div>', unsafe_allow_html=True); st.stop()
 
-# --- 4. 巔峰顯化：發光星空、紅柱、發光證書 ---
+# --- 4. 核心系統：星空、紅柱、說明、證書 ---
+st.sidebar.title("📊 戰略參數對位")
+q1 = st.sidebar.slider("Q1 實體實相 (資產/基礎) %", 0, 100, 100)
+q2 = st.sidebar.slider("Q2 邏輯實相 (專利/算法) %", 0, 100, 100)
+q3 = st.sidebar.slider("Q3 財務實相 (利潤/閉環) %", 0, 100, 100)
+q4 = st.sidebar.slider("Q4 營運實相 (主權/團隊) %", 0, 100, 100)
+
 st.title("🚀 ZPIM 2026 旗艦戰略導航儀")
-st.sidebar.markdown(f"**授權身份：** {st.session_state['level']}")
-if st.session_state.get('level') == "GUEST":
-    st.sidebar.warning(f"⏳ 剩餘可用次數：{st.session_state.get('remains')}")
-
-
-# 4Q 調整拉桿
-q1 = st.sidebar.slider("Q1 實體 (Physical) %", 0, 100, 100)
-q2 = st.sidebar.slider("Q2 邏輯 (Logic) %", 0, 100, 100)
-q3 = st.sidebar.slider("Q3 財務 (Financial) %", 0, 100, 100)
-q4 = st.sidebar.slider("Q4 營運 (Operation) %", 0, 100, 100)
-
 if st.sidebar.button("🚀 啟動完整診斷"):
-    # 紅色柱圖顯化
-    data = pd.DataFrame({'維度':['Q1','Q2','Q3','Q4'], '值':[q1,q2,q3,q4]})
+    # 紅色柱圖
+    data = pd.DataFrame({'維度':['Q1','Q2','Q3','Q4'], '百分比':[q1,q2,q3,q4]})
     st.bar_chart(data.set_index('維度'), color="#FF0000")
     
-    # 首席鑑定結論與帶浮水印證書
+    # 4Q 深度鑑定結論 (取代無意義數字)
+    st.markdown('<div class="main-box">', unsafe_allow_html=True)
+    st.subheader("📜 首席顧問 鑑定結論：")
+    cols = st.columns(2)
+    with cols[0]:
+        st.write(f"✅ **Q1 實體** ({q1}%): 資產底蘊深厚。")
+        st.write(f"✅ **Q2 邏輯** ({q2}%): 運算邏輯清晰。")
+    with cols[1]:
+        st.write(f"✅ **Q3 財務** ({q3}%): 財務實相已閉環。")
+        st.write(f"✅ **Q4 營運** ({q4}%): SOP 運作完美。")
+    
+    st.info("💡 **顧問核心建議**：結構穩固，主權定格。請維持 Q1 實體資產與 Q3 財務流之連動純度。")
+    
+    # 官方鑑定書
     st.markdown(f"""
-    <div class="main-box" style="margin-top: 30px;">
-        <div class="certificate-watermark">ZPIM 2026 EXCLUSIVE</div>
-        <h2 style="color: #00ffcc; text-align: center; text-shadow: 0 0 10px #00ffcc;">📜 零點實相 2026 官方鑑定書</h2>
-        <p style="text-align: center; color: #E0FFFF;"><b>總評級：S 級 (結構穩固，主權定格)</b></p>
-        <p style="color: #E0FFFF;"><b>鑑定編號：ZPIM-{int(time.time())}</b></p>
         <hr style="border-top: 2px dashed #00ffcc;">
-        <p style="color: #E0FFFF;">✅ **Q1 實體**：優異，資產定格狀態穩定。</p>
-        <p style="color: #E0FFFF;">✅ **Q2 邏輯**：強悍，算法主權是關鍵。</p>
-        <p style="color: #E0FFFF;">✅ **Q3 財務**：閉環，注意資金流實相。</p>
-        <p style="color: #E0FFFF;">✅ **Q4 營運**：主權清晰，強化決策純度。</p>
-        <p style="text-align: right; color: #E0FFFF; margin-top: 20px;"><b>首席顧問 已授權數位簽章</b></p>
-    </div>
+        <h2 style="color: #00ffcc; text-align: center;">📜 零點實相 2026 官方鑑定書</h2>
+        <p style="text-align: center; color: white;"><b>總評級：S 級 (戰略領航者) | ID: ZPIM-{int(time.time())}</b></p>
     """, unsafe_allow_html=True)
-
-# --- 5. 安全退出 ---
-if st.sidebar.button("🔒 安全退出"):
-    st.session_state.clear()
-    st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)
