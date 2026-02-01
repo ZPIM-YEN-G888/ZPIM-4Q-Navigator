@@ -6,83 +6,61 @@ try:
 except:
     has_plotly = False
 
-# --- 1. 全域視覺主權 (精確亮化與修正白字) ---
+# --- 1. 全域視覺主權 (文字銳化、點亮 101、防偽浮水印) ---
 st.set_page_config(page_title="ZPIM 2026 旗艦導航儀", layout="wide")
 
 st.markdown("""
     <style>
-    /* 背景點亮：提升漸層亮度 */
-    .stApp {
-        background: radial-gradient(circle at center, #004d4d 0%, #000000 100%) !important;
-        background-attachment: fixed !important;
-    }
+    .stApp { background: radial-gradient(circle at center, #003333 0%, #000000 100%) !important; }
     
     /* 防偽浮水印 */
     .stApp::before {
         content: "ZPIM 2026 OFFICIAL 首席顧問專屬 ";
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        font-size: 26px; color: rgba(0, 255, 204, 0.1);
+        font-size: 24px; color: rgba(0, 255, 204, 0.08);
         pointer-events: none; z-index: 1000;
         display: flex; flex-wrap: wrap; transform: rotate(-30deg);
-        justify-content: space-around; line-height: 220px;
+        justify-content: space-around; line-height: 200px;
     }
 
     /* 登入標題銳化 */
     h1 { color: #FFFFFF !important; font-weight: 900 !important; }
 
-    /* 重點修正 1：左側標題改為綠色字體 */
+    /* 左側側邊欄標題：鎖定深戰略綠 */
     section[data-testid="stSidebar"] h1, 
     section[data-testid="stSidebar"] .stMarkdown p {
-        color: #006600 !important; /* 強制綠色字體 */
-        font-weight: 900 !important;
-    }
-    
-    /* 修正側邊欄其餘標籤顏色 */
-    section[data-testid="stSidebar"] label,
-    section[data-testid="stSidebar"] span {
-        color: #004400 !important;
-        font-weight: 900 !important;
+        color: #006600 !important; font-weight: 900 !important;
     }
 
     /* 鑑定書區塊 */
     .id-card {
-        background: rgba(0, 30, 30, 0.9);
+        background: rgba(0, 40, 40, 0.9);
         border: 2px solid #00FFCC;
         border-radius: 15px; padding: 25px;
     }
-    .id-card p, .id-card h3 { color: #FFFFFF !important; font-weight: 900 !important; }
+    .id-card p { color: #FFFFFF !important; font-weight: 900 !important; font-size: 1.1rem; }
 
-    /* 按鈕樣式 */
+    /* 按鈕亮化 */
     div.stButton > button {
         background-color: #00FF00 !important; color: #000000 !important;
         font-weight: 900 !important; border: 2px solid #FFFFFF;
     }
-
-    /* 重點修正 2：點亮右側 101 戰略燈塔與背景網格 */
-    .tower {
-        position: fixed; bottom: 0; right: 5%; width: 220px; height: 500px;
-        background: linear-gradient(to top, rgba(0, 255, 204, 0.5), transparent);
-        clip-path: polygon(45% 0, 55% 0, 100% 100%, 0 100%);
-        z-index: -1;
-        filter: brightness(1.8) drop-shadow(0 0 30px #00FFCC);
-    }
     </style>
-    <div class="tower"></div>
     """, unsafe_allow_html=True)
 
-# 電路跳動動畫
+# 閃電與電路動畫 (修正字體顏色為正亮綠)
 circuit_svg = """
 <div style="text-align:center; margin-bottom: 20px;">
     <svg width="250" height="60" viewBox="0 0 250 60">
-        <path d="M0 30 L60 30 L85 5 L110 55 L135 30 L250 30" stroke="#00AA00" fill="transparent" stroke-width="5">
-            <animate attributeName="stroke-dasharray" from="0,500" to="500,0" dur="1.2s" repeatCount="indefinite" />
+        <path d="M0 30 L60 30 L85 5 L110 55 L135 30 L250 30" stroke="#00FF00" fill="transparent" stroke-width="5">
+            <animate attributeName="stroke-dasharray" from="0,500" to="500,0" dur="1s" repeatCount="indefinite" />
         </path>
     </svg>
-    <p style="color:#006600; font-weight:900;">⚡ ZPIM 數據通訊中</p>
+    <p style="color:#00FF00 !important; font-weight:900; font-size:1.2rem; letter-spacing:2px; text-shadow: 0 0 10px #00FF00;">⚡ ZPIM 數據通訊中</p>
 </div>
 """
 
-# --- 2. 門禁系統 ---
+# --- 2. 門禁與主頁邏輯 ---
 if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
 
@@ -94,14 +72,11 @@ if not st.session_state.authenticated:
         if pwd == "zpim888-2560" or pwd == "1-1":
             st.session_state.authenticated = True
             st.rerun()
-        else:
-            st.error("密鑰錯誤")
     st.stop()
 
-# --- 3. 戰略操控區 (左側標題修正為綠色) ---
+# --- 3. 戰略操控區 (左側) ---
 st.sidebar.markdown(circuit_svg, unsafe_allow_html=True)
 st.sidebar.title("🎮 戰略導航中心")
-st.sidebar.markdown("---")
 q1 = st.sidebar.slider("Q1 實體資產權重 (%)", 0, 100, 100)
 q2 = st.sidebar.slider("Q2 靈性邏輯參數 (%)", 0, 100, 100)
 q3 = st.sidebar.slider("Q3 財務動能指標 (%)", 0, 100, 100)
@@ -111,36 +86,48 @@ if st.sidebar.button("🔒 安全退出系統"):
     st.session_state.authenticated = False
     st.rerun()
 
-# --- 4. 鑑定書產出 ---
+# --- 4. 鑑定書產出 (植入 101 燈塔視覺) ---
 if st.sidebar.button("🚀 啟動 101 戰略診斷"):
     st.title("🏆 ZPIM 2026 官方旗艦鑑定書")
+    col1, col2 = st.columns([1.2, 1])
     
-    col1, col2 = st.columns([1, 1])
     with col1:
         st.markdown(f"""
         <div class="id-card">
             <h3 style="color:#00FFCC !important;">📊 四維度深度診斷報告</h3>
-            <br>
-            <p>✅ <b>Q1 實體維度：{q1}%</b> - 核心資產已定格</p>
-            <p>✅ <b>Q2 靈性邏輯：{q2}%</b> - 指引路徑極致</p>
-            <p>✅ <b>Q3 財務權限：{q3}%</b> - 點數核銷正常</p>
-            <p>✅ <b>Q4 營運藥方：{q4}%</b> - 電路通訊優良</p>
-            <hr style="border: 1px solid #00FFCC;">
-            <p style="color:#00FFCC !important; font-size:1.1rem;">🎯 <b>改善對策：</b>101 燈塔已全功率運作，主權防偽保護開啟。</p>
+            <p>✅ Q1 實體：{q1}% - 核心資產已定格</p>
+            <p>✅ Q2 邏輯：{q2}% - 指引路徑極致</p>
+            <p>✅ Q3 財務：{q3}% - 點數核銷正常</p>
+            <p>✅ Q4 營運：{q4}% - 電路通訊優良</p>
+            <hr style="border: 0.5px solid #00FFCC;">
+            <p style="color:#00FFCC !important;">🎯 改善對策：101 燈塔戰略就位。</p>
         </div>
         """, unsafe_allow_html=True)
 
     with col2:
+        # 在雷達圖上方植入 101 燈塔 SVG
+        st.markdown("""
+        <div style="text-align:right;">
+            <svg width="100" height="150" viewBox="0 0 100 150">
+                <path d="M45 0 L55 0 L100 150 L0 150 Z" fill="url(#grad1)" />
+                <defs><linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#00FFCC;stop-opacity:0.8" />
+                <stop offset="100%" style="stop-color:#00FFCC;stop-opacity:0" />
+                </linearGradient></defs>
+            </svg>
+            <p style="color:#00FFCC; font-size:0.8rem; margin-right:20px;">101 戰略對位中</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
         if has_plotly:
-            # 雷達圖增加網格對比度
             fig = go.Figure(data=go.Scatterpolar(
-                r=[q1, q2, q3, q4, q1], theta=['Q1','Q2','Q3','Q4','Q1'],
-                fill='toself', line_color='#00FFCC', fillcolor='rgba(0, 255, 204, 0.5)'
+                r=[q1, q2, q3, q4, q1], theta=['Q1','Q2','Q3','Q4', 'Q1'],
+                fill='toself', line_color='#00FFCC', fillcolor='rgba(0, 255, 204, 0.4)'
             ))
             fig.update_layout(
-                polar=dict(radialaxis=dict(visible=True, range=[0, 100], color="#00FFCC", gridcolor="#444")),
+                polar=dict(radialaxis=dict(visible=True, range=[0, 100], color="#00FFCC")),
                 showlegend=False, paper_bgcolor='rgba(0,0,0,0)', font_color="#00FFCC"
             )
             st.plotly_chart(fig, use_container_width=True)
 
-st.caption("© 2026 ZPIM 零點實相 - 首席顧問專屬導航儀 v3.1")
+st.caption("© 2026 ZPIM 零點實相 - 首席顧問專屬導航儀 v3.2")
