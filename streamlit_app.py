@@ -64,14 +64,18 @@ circuit_svg = """
 if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
 
+# --- 修改後的安全驗證區 (替換您截圖中的 67-75 行) ---
 if not st.session_state.authenticated:
     st.title("🛡️ ZPIM 2026 核心安全驗證")
     st.markdown(circuit_svg, unsafe_allow_html=True)
     pwd = st.text_input("輸入首席顧問密鑰：", type="password")
     if st.button("啟動電路導通"):
-        if pwd == "zpim888-2560" or pwd == "1-1":
+        # 關鍵修改：刪除所有舊密碼 (如 "1-1")，改向保險箱討鑰匙
+        if pwd == st.secrets["ident_code"]: 
             st.session_state.authenticated = True
             st.rerun()
+        else:
+            st.error("密碼錯誤，請聯繫本人獲取授權。")
     st.stop()
 
 # --- 3. 戰略操控區 (左側) ---
@@ -94,13 +98,13 @@ if st.sidebar.button("🚀 啟動 101 戰略診斷"):
     with col1:
         st.markdown(f"""
         <div class="id-card">
-            <h3 style="color:#00FFCC !important;">📊 四維度深度診斷報告</h3>
+            <h3 style="color:white !important;">📊 四維度深度診斷報告</h3>
             <p>✅ Q1 實體：{q1}% - 核心資產已定格</p>
             <p>✅ Q2 邏輯：{q2}% - 指引路徑極致</p>
             <p>✅ Q3 財務：{q3}% - 點數核銷正常</p>
             <p>✅ Q4 營運：{q4}% - 電路通訊優良</p>
             <hr style="border: 0.5px solid #00FFCC;">
-            <p style="color:#00FFCC !important;">🎯 改善對策：101 燈塔戰略就位。</p>
+            <p style="color:white !important;">🎯 改善對策：101888 燈塔戰略就位。</p>
         </div>
         """, unsafe_allow_html=True)
 
