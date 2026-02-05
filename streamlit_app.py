@@ -117,10 +117,10 @@ if st.sidebar.button("🚀 啟動 101 戰略診斷"):
         st.write("") # 增加一點間距
              # --- 第 118 行開始：亮白字體優化 ---
         if avg_score == 100:
-             st.markdown(f"### <span style='color:white;'>🏆 **Absolute Sovereign Reality**</span>", unsafe_allow_html=True)
-             st.markdown(f"<span style='color:white;'>✅ **名實對位，10:10:10 頻率鎖定**</span>", unsafe_allow_html=True)
-             st.markdown(f"<span style='color:white;'>🧬 實相確效：`{soul_val}` | 🛡️ 主權自理：`啟動`</span>", unsafe_allow_html=True)
-             elif avg_score >= 80:
+            st.markdown(f"### <span style='color:white;'>🏆 **Absolute Sovereign Reality**</span>", unsafe_allow_html=True)
+            st.markdown(f"<span style='color:white;'>✅ **名實對位，10:10:10 頻率鎖定**</span>", unsafe_allow_html=True)
+            st.markdown(f"<span style='color:white;'>🧬 實相確效：`{soul_val}` | 🛡️ 主權自理：`啟動`</span>", unsafe_allow_html=True)
+        elif avg_score >= 80:
              st.markdown(f"### <span style='color:white;'>🥈 **Standard Competence**</span>", unsafe_allow_html=True)
              st.markdown(f"<span style='color:white;'>ℹ️ **行政適格，建議啟動一鍵定格程序**</span>", unsafe_allow_html=True)
 with col2:
