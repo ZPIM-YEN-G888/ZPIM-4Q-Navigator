@@ -65,12 +65,11 @@ if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
 
 # --- 修改後的安全驗證區 (替換您截圖中的 67-75 行) ---
-# --- 重新再來，視覺銳化直接定格 ---
 if not st.session_state.authenticated:
     st.title("🛡️ ZPIM 2026 核心安全驗證")
     st.markdown(circuit_svg, unsafe_allow_html=True)
     
-    # 這裡就是您要的：深白色、加粗、清晰標籤
+    # 這裡強化了標籤：深白、加粗、清晰
     st.markdown("<p style='color: #FFFFFF; font-weight: 900; font-size: 1.3rem; text-shadow: 2px 2px 4px #000;'>🔑 請輸入首席顧問密鑰：</p>", unsafe_allow_html=True)
     
     pwd = st.text_input("", type="password", label_visibility="collapsed")
@@ -82,11 +81,6 @@ if not st.session_state.authenticated:
         else:
             st.error("密鑰錯誤，行政授權拒絕。")
             
-    st.stop() # 這一行就是剛才報錯的源頭，現在已經鎖死在正確位置
-# --- 驗證結束 ---
-            st.rerun()
-        else:
-            st.error("密碼錯誤，請聯繫本人獲取授權。")
     st.stop()
 
 # --- 3. 戰略操控區 (左側) ---
