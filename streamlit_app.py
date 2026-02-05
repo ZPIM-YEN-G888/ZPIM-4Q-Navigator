@@ -110,17 +110,17 @@ if st.sidebar.button("🚀 啟動 101 戰略診斷"):
             <p style="color: #FFD700 !important; font-weight: 800; text-shadow: 1px 1px 0px #000, -1px -1px 0px #000, 0px 0px 15px #FFD700; letter-spacing: 1px; font-size: 22px !important;">🎯 改善對策：101888 燈塔戰略就位。</p>
         </div>
         """, unsafe_allow_html=True)
-    # --- 第 113 行開始：科學精進動態裁決 ---
-# --- 縮排請對齊 st.markdown(f"""...""") ---
-    avg_score = (q1 + q2 + q3 + q4) / 4
+        # --- 第 113 行開始：科學精進動態裁決 ---
+        # --- 縮排請對齊 st.markdown(f"""...""") ---
+        avg_score = (q1 + q2 + q3 + q4) / 4
     
-    st.write("") # 增加一點間距
-    # --- 第 118 行開始：亮白字體優化 ---
-    if avg_score == 100:
+        st.write("") # 增加一點間距
+        # --- 第 118 行開始：亮白字體優化 ---
+        if avg_score == 100:
         st.markdown(f"### <span style='color:white;'>🏆 **Absolute Sovereign Reality**</span>", unsafe_allow_html=True)
         st.markdown(f"<span style='color:white;'>✅ **名實對位，10:10:10 頻率鎖定**</span>", unsafe_allow_html=True)
         st.markdown(f"<span style='color:white;'>🧬 實相確效：`{soul_val}` | 🛡️ 主權自理：`啟動`</span>", unsafe_allow_html=True)
-    elif avg_score >= 80:
+        elif avg_score >= 80:
         st.markdown(f"### <span style='color:white;'>🥈 **Standard Competence**</span>", unsafe_allow_html=True)
         st.markdown(f"<span style='color:white;'>ℹ️ **行政適格，建議啟動一鍵定格程序**</span>", unsafe_allow_html=True)
 with col2:
