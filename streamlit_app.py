@@ -123,7 +123,7 @@ if st.sidebar.button("🚀 啟動 101 戰略診斷"):
          elif avg_score >= 80:
          st.markdown(f"### <span style='color:white;'>🥈 **Standard Competence**</span>", unsafe_allow_html=True)
          st.markdown(f"<span style='color:white;'>ℹ️ **行政適格，建議啟動一鍵定格程序**</span>", unsafe_allow_html=True)
-        with col2:
+   with col2:
         # 在雷達圖上方植入 101 燈塔 SVG
         st.markdown("""
         <div style="text-align:right;">
