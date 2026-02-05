@@ -110,7 +110,17 @@ if st.sidebar.button("🚀 啟動 101 戰略診斷"):
             <p style="color: #FFD700 !important; font-weight: 800; text-shadow: 1px 1px 0px #000, -1px -1px 0px #000, 0px 0px 15px #FFD700; letter-spacing: 1px; font-size: 22px !important;">🎯 改善對策：101888 燈塔戰略就位。</p>
         </div>
         """, unsafe_allow_html=True)
+# --- 第 113 行開始：科學精進動態裁決 ---
+avg_score = (q1 + q2 + q3 + q4) / 4
 
+st.markdown("---") # 加入分隔線，增加行政儀式感
+if avg_score == 100:
+    st.success("🏆 **Absolute Sovereign Reality**: 名實對位，10:10:10 頻率鎖定。")
+    st.info(f"🧬 靈魂確效：{soul_val} | 🛡️ 主權肌肉：啟動") # 連結您 88-91 行的參數
+elif avg_score >= 80:
+    st.info("🥈 **Standard Competence**: 行政適格，建議啟動一鍵定格程序。")
+else:
+    st.warning("⚠️ **Risk Warning**: 偵測到名實分離，存在泡沫化風險。")
     with col2:
         # 在雷達圖上方植入 101 燈塔 SVG
         st.markdown("""
