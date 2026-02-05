@@ -110,7 +110,7 @@ if st.sidebar.button("🚀 啟動 101 戰略診斷"):
             <p style="color: #FFD700 !important; font-weight: 800; text-shadow: 1px 1px 0px #000, -1px -1px 0px #000, 0px 0px 15px #FFD700; letter-spacing: 1px; font-size: 22px !important;">🎯 改善對策：101888 燈塔戰略就位。</p>
         </div>
         """, unsafe_allow_html=True)
-# --- 第 113 行開始：科學精進動態裁決 ---
+    # --- 第 113 行開始：科學精進動態裁決 ---
 avg_score = (q1 + q2 + q3 + q4) / 4
 
 st.markdown("---") # 加入分隔線，增加行政儀式感
