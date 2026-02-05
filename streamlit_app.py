@@ -65,13 +65,14 @@ if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
 
 # --- 修改後的安全驗證區 (替換您截圖中的 67-75 行) ---
-# --- 修正後的安全驗證區 (文字銳化版) ---
 if not st.session_state.authenticated:
-    st.title("🛡️ ZPIM 2026 核心安全驗證")
+    st.title("🛡 ZPIM 2026 核心安全驗證")
     st.markdown(circuit_svg, unsafe_allow_html=True)
-    
-    # 強化標籤文字：改為深白(亮白) + 陰影 + 字體加粗
-    st.markdown("<p style='color: #FFFFFF; font-weight: 900; font-size: 1.3rem; text-shadow: 2px 2px 4px #000; margin-bottom: -10px;'>🔑 請輸入首席顧問密鑰：</p>", unsafe_allow_html=True)
+    pwd = st.text_input("輸入首席顧問密鑰：", type="password")
+    if st.button("啟動電路導通"):
+        # 關鍵修改：刪除所有舊密碼 (如 "1-1")，改向保險箱討鑰匙
+        if pwd == st.secrets["ident_code"]: 
+            st.session_state.authenticated = True
     
     # 隱藏原本淺色的 label，使用自定義的亮白標籤
     pwd = st.text_input("", type="password", label_visibility="collapsed")
