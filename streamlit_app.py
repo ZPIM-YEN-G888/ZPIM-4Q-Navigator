@@ -86,7 +86,7 @@ q2 = st.sidebar.slider("Q2 靈性邏輯參數 (%)", 0, 100, 100)
 q3 = st.sidebar.slider("Q3 財務動能指標 (%)", 0, 100, 100)
 q4 = st.sidebar.slider("Q4 營運藥方配比 (%)", 0, 100, 100)
 # --- 3.5 黑貓程式：科學精進鑑定 (New) ---
-soul_val = st.sidebar.select_slider("Entity Soul Validation", options=["Loss", "Normal", "Pure"], value="Pure")
+soul_val = st.sidebar.select_slider("實相確效 (Reality Validation)", options=["泡沫", "常態", "純淨"], value="純淨")
 muscle_mem = st.sidebar.checkbox("Sovereign Muscle Memory Active", value=True)
 freq_lock = st.sidebar.info("10:10:10 Frequency Locked")
 if st.sidebar.button("🔒 安全退出系統"):
@@ -119,7 +119,7 @@ if st.sidebar.button("🚀 啟動 101 戰略診斷"):
     if avg_score == 100:
         st.markdown(f"### <span style='color:white;'>🏆 **Absolute Sovereign Reality**</span>", unsafe_allow_html=True)
         st.markdown(f"<span style='color:white;'>✅ **名實對位，10:10:10 頻率鎖定**</span>", unsafe_allow_html=True)
-        st.markdown(f"<span style='color:white;'>🧬 靈魂確效：`{soul_val}` | 🛡️ 主權肌肉：`啟動`</span>", unsafe_allow_html=True)
+        st.markdown(f"<span style='color:white;'>🧬 實相確效：`{soul_val}` | 🛡️ 主權肌肉：`啟動`</span>", unsafe_allow_html=True)
     elif avg_score >= 80:
         st.markdown(f"### <span style='color:white;'>🥈 **Standard Competence**</span>", unsafe_allow_html=True)
         st.markdown(f"<span style='color:white;'>ℹ️ **行政適格，建議啟動一鍵定格程序**</span>", unsafe_allow_html=True)
