@@ -23,16 +23,13 @@ st.markdown("""
         justify-content: space-around; line-height: 200px;
     }
 
-    /* 登入標題銳化 */
     h1 { color: #FFFFFF !important; font-weight: 900 !important; }
 
-    /* 左側側邊欄標題：鎖定深戰略綠 */
     section[data-testid="stSidebar"] h1, 
     section[data-testid="stSidebar"] .stMarkdown p {
         color: #006600 !important; font-weight: 900 !important;
     }
 
-    /* 鑑定書區塊 */
     .id-card {
         background: rgba(0, 40, 40, 0.9);
         border: 2px solid #00FFCC;
@@ -40,7 +37,6 @@ st.markdown("""
     }
     .id-card p { color: #FFFFFF !important; font-weight: 900 !important; font-size: 1.1rem; }
 
-    /* 按鈕亮化 */
     div.stButton > button {
         background-color: #00FF00 !important; color: #000000 !important;
         font-weight: 900 !important; border: 2px solid #FFFFFF;
@@ -48,7 +44,6 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# 閃電與電路動畫 (修正字體顏色為正亮綠)
 circuit_svg = """
 <div style="text-align:center; margin-bottom: 20px;">
     <svg width="250" height="60" viewBox="0 0 250 60">
@@ -64,23 +59,17 @@ circuit_svg = """
 if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
 
-# --- 修改後的安全驗證區 (替換您截圖中的 67-75 行) ---
 if not st.session_state.authenticated:
     st.title("🛡️ ZPIM 2026 核心安全驗證")
     st.markdown(circuit_svg, unsafe_allow_html=True)
-    
-    # 這裡強化了標籤：深白、加粗、清晰
     st.markdown("<p style='color: #FFFFFF; font-weight: 900; font-size: 1.3rem; text-shadow: 2px 2px 4px #000;'>🔑 請輸入首席顧問密鑰：</p>", unsafe_allow_html=True)
-    
-    pwd = st.text_input("", type="password", label_visibility="collapsed")
-    
+    pwd = st.text_input("", type="password", key="login_pwd", label_visibility="collapsed")
     if st.button("啟動電路導通"):
         if pwd == st.secrets["ident_code"]: 
             st.session_state.authenticated = True
             st.rerun()
         else:
             st.error("密鑰錯誤，行政授權拒絕。")
-            
     st.stop()
 
 # --- 3. 戰略操控區 (左側) ---
@@ -90,10 +79,9 @@ q1 = st.sidebar.slider("Q1 實體資產權重 (%)", 0, 100, 100)
 q2 = st.sidebar.slider("Q2 靈性邏輯參數 (%)", 0, 100, 100)
 q3 = st.sidebar.slider("Q3 財務動能指標 (%)", 0, 100, 100)
 q4 = st.sidebar.slider("Q4 營運藥方配比 (%)", 0, 100, 100)
-# --- 3.5 黑貓程式：科學精進鑑定 (New) ---
 soul_val = st.sidebar.select_slider("實相確效 (Reality Validation)", options=["泡沫", "常態", "純淨"], value="純淨")
 muscle_mem = st.sidebar.toggle("主權自理 (Sovereign Autonomy)", value=True)
-freq_lock = st.sidebar.info("10:10:10 Frequency Locked")
+st.sidebar.info("10:10:10 Frequency Locked")
 if st.sidebar.button("🔒 安全退出系統"):
     st.session_state.authenticated = False
     st.rerun()
@@ -106,7 +94,7 @@ if st.sidebar.button("🚀 啟動 101 戰略診斷"):
     with col1:
         st.markdown(f"""
         <div class="id-card">
-            <h3 style="color: #FFD700 !important; font-weight: 900; text-shadow: 2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 0px 0px 20px #FFD700; letter-spacing: 3px; font-size: 30px !important; filter: drop-shadow(0px 0px 5px rgba(255,215,0,0.5));">📊 四維度深度診斷報告</h3>
+            <h3 style="color: #FFD700 !important; font-weight: 900; text-shadow: 2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 0px 0px 20px #FFD700; letter-spacing: 3px; font-size: 30px !important;">📊 四維度深度診斷報告</h3>
             <p>✅ Q1 實體：{q1}% - 核心資產已定格</p>
             <p>✅ Q2 邏輯：{q2}% - 指引路徑極致</p>
             <p>✅ Q3 財務：{q3}% - 點數核銷正常</p>
@@ -114,24 +102,20 @@ if st.sidebar.button("🚀 啟動 101 戰略診斷"):
             <hr style="border: 0.5px solid #00FFCC;">
             <p style="color: #FFD700 !important; font-weight: 800; text-shadow: 1px 1px 0px #000, -1px -1px 0px #000, 0px 0px 15px #FFD700; letter-spacing: 1px; font-size: 22px !important;">🎯 改善對策：101888 燈塔戰略就位。</p>
         </div>
-                 """, unsafe_allow_html=True)
-         # --- 第 113 行開始：科學精進動態裁決 ---
-         # --- 縮排請對齊 st.markdown(f"""...""") ---
+        """, unsafe_allow_html=True)
+        
         avg_score = (q1 + q2 + q3 + q4) / 4
-    
-        st.write("") # 增加一點間距
-             # --- 第 118 行開始：亮白字體優化 ---
+        st.write("") 
         if avg_score == 100:
             st.markdown(f"### <span style='color:white;'>🏆 **Absolute Sovereign Reality**</span>", unsafe_allow_html=True)
-            st.markdown(f"<span style='color:white;'>✅ **名實對位，10:10:10 頻率鎖定**</span>", unsafe_allow_html=True)
+            st.markdown(f"<span style='color:white;'>✅ **名實對位：菌腸腦軸再生邏輯導通**</span>", unsafe_allow_html=True)
             st.markdown(f"<span style='color:white;'>🧬 實相確效：`{soul_val}` | 🛡️ 主權自理：`啟動` </span>", unsafe_allow_html=True)
         elif avg_score >= 80:
-            st.markdown(f"<span style='color:rgba(255,255,255,0.6); font-size:0.8rem;'>🕒 Temporal Validation: 2026/02/01 Coordinate Synced</span>", unsafe_allow_html=True)
             st.markdown(f"### <span style='color:white;'>🥈 **Standard Competence**</span>", unsafe_allow_html=True)
             st.markdown(f"<span style='color:white;'>ℹ️ **行政適格，建議啟動一鍵定格程序**</span>", unsafe_allow_html=True)
-with col2:
-        # 在雷達圖上方植入 101 燈塔 SVG
-        st.markdown(""", unsafe_allow_html=True)
+
+    with col2:
+        st.markdown("""
         <div style="text-align:right;">
             <svg width="100" height="150" viewBox="0 0 100 150">
                 <path d="M45 0 L55 0 L100 150 L0 150 Z" fill="url(#grad1)" />
