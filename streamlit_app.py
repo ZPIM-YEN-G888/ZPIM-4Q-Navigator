@@ -81,7 +81,7 @@ q3 = st.sidebar.slider("Q3 財務動能指標 (%)", 0, 100, 100)
 q4 = st.sidebar.slider("Q4 營運藥方配比 (%)", 0, 100, 100)
 soul_val = st.sidebar.select_slider("實相確效 (Reality Validation)", options=["泡沫", "常態", "純淨"], value="純淨")
 muscle_mem = st.sidebar.toggle("主權自理 (Sovereign Autonomy)", value=True)
-st.sidebar.info("10:10:10 Frequency Locked")
+st.sidebar.info("10 : 10 : 10 淨土頻率定格")
 if st.sidebar.button("🔒 安全退出系統"):
     st.session_state.authenticated = False
     st.rerun()
