@@ -74,7 +74,7 @@ if not st.session_state.authenticated:
 
 # --- 3. 戰略操控區 (左側) ---
 st.sidebar.markdown(circuit_svg, unsafe_allow_html=True)
-st.sidebar.title("🎮 戰略導航中心")
+st.sidebar.title("🎮 實相管理中樞")
 q1 = st.sidebar.slider("Q1 實體資產權重 (%)", 0, 100, 100)
 q2 = st.sidebar.slider("Q2 靈性邏輯參數 (%)", 0, 100, 100)
 q3 = st.sidebar.slider("Q3 財務動能指標 (%)", 0, 100, 100)
@@ -87,7 +87,7 @@ if st.sidebar.button("🔒 安全退出系統"):
     st.rerun()
 
 # --- 4. 鑑定書產出 (植入 101 燈塔視覺) ---
-if st.sidebar.button("🚀 啟動 101 戰略診斷"):
+if st.sidebar.button("🚀 啟動實相秩序確效"):
     st.title("🏆 ZPIM 2026 實相秩序管理與資產確效鑑定書")
     col1, col2 = st.columns([1.2, 1])
     
