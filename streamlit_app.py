@@ -95,10 +95,10 @@ if st.sidebar.button("🚀 啟動 101 戰略診斷"):
         st.markdown(f"""
         <div class="id-card">
             <h3 style="color: #FFD700 !important; font-weight: 900; text-shadow: 2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000, 0px 0px 20px #FFD700; letter-spacing: 3px; font-size: 30px !important;">📊 四維度深度診斷報告</h3>
-            <p>✅ Q1 實體：{q1}% - 核心資產已定格</p>
-            <p>✅ Q2 邏輯：{q2}% - 指引路徑極致</p>
-            <p>✅ Q3 財務：{q3}% - 點數核銷正常</p>
-            <p>✅ Q4 營運：{q4}% - 電路通訊優良</p>
+            <p>✅ Q1 實體：{q1}% - 依報觀測 - 實體標的確效</p>
+            <p>✅ Q2 邏輯：{q2}% - 正報鑑定 - 主權者自性頻率</p>
+            <p>✅ Q3 財務：{q3}% - 利益對位 - 量子糾纏變現核網</p>
+            <p>✅ Q4 營運：{q4}% - 行政蓮花 - 寂靜營運隔離艙</p>
             <hr style="border: 0.5px solid #00FFCC;">
             <p style="color: #FFD700 !important; font-weight: 800; text-shadow: 1px 1px 0px #000, -1px -1px 0px #000, 0px 0px 15px #FFD700; letter-spacing: 1px; font-size: 22px !important;">🎯 改善對策：101888 燈塔戰略就位。</p>
         </div>
