@@ -7,7 +7,7 @@ except:
     has_plotly = False
 
 # --- 1. 全域視覺主權 (文字銳化、點亮 101、防偽浮水印) ---
-st.set_page_config(page_title="ZPIM 2026 旗艦導航儀", layout="wide")
+st.set_page_config(page_title="ZPIM 2026 行政中樞", layout="wide")
 
 st.markdown("""
     <style>
